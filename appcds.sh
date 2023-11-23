@@ -6,7 +6,7 @@ set -e
 # Use -s to only start the application
 
 PROJECT_NAME="spring-appcds-demo"
-VERSION="0.0.1-SNAPSHOT"
+VERSION="1.0.0-SNAPSHOT"
 
 # Change JAVA_OPTS to "" to not use Spring AOT optimizations
 JAVA_OPTS="-Dspring.aot.enabled=true"
