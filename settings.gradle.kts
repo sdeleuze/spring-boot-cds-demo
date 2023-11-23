@@ -5,4 +5,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = "appcds-demo"
+rootProject.name = "spring-appcds-demo"
