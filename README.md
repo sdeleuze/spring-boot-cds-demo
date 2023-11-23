@@ -38,7 +38,21 @@ Unpack the Spring Boot application to a JAR structure suitable for optimal perfo
 ./unpack-executable-jar.sh -d build/unpacked build/libs/appcds-demo-0.0.1-SNAPSHOT.jar
 ```
 
-Perform the AppCDS training run (here with Spring AOT optimizations):
+This shoukd create the following JAR structure:
+```
+build
+└── unpacked
+        ├── application
+        │   └── spring-appcds-demo-1.0.0-SNAPSHOT.jar
+        ├── dependencies
+        │   ├── ...
+        │   ├── spring-context-6.1.0.jar
+        │   ├── spring-context-support-6.1.0.jar
+        │   ├── ...
+        └── run-app.jar"
+```
+
+Perform the AppCDS training run (here with Spring AOT optimizations) in order to create an additional `build/unpacked/run-app.jsa` file:
 ```bash
 java -Dspring.aot.enabled=true -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
 ```
