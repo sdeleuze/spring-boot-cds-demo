@@ -1,7 +1,7 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.2.0-SNAPSHOT"
-	id("org.springframework.boot.aot") version "3.2.0-SNAPSHOT" // Optional but provide additional optimizations
+	id("org.springframework.boot") version "3.2.0"
+	id("org.springframework.boot.aot") version "3.2.0" // Optional but provide additional optimizations
 	id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -14,8 +14,6 @@ java {
 
 repositories {
 	mavenCentral()
-	maven { url = uri("https://repo.spring.io/milestone") }
-	maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 dependencies {
