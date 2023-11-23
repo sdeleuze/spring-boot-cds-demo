@@ -54,12 +54,17 @@ build
 
 Perform the AppCDS training run (here with Spring AOT optimizations) in order to create an additional `build/unpacked/run-app.jsa` file:
 ```bash
-java -Dspring.aot.enabled=true -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
+java -Dspring.aot.enabled=true \
+-Dspring.context.exit=onRefresh \
+-XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa\
+ -jar build/unpacked/run-app.jar
 ```
 
 And finally run the application with AppCDS optimizations (here with Spring AOT optimizations):
 ```bash
-java -Dspring.aot.enabled=true -XX:SharedArchiveFile=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
+java -Dspring.aot.enabled=true \
+-XX:SharedArchiveFile=build/unpacked/run-app.jsa \
+-jar build/unpacked/run-app.jar
 ```
 
 Check the startup time, for example on my MacBook Pro M2:
