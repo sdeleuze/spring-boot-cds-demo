@@ -13,14 +13,17 @@ JAVA_OPTS="-Dspring.aot.enabled=true"
 
 if [[ $1 != "-s" ]]; then
   if [ ! -f build/libs/${PROJECT_NAME}-${VERSION}.jar ]; then
-    ./gradlew clean build
+    ./gradlew build
   fi
-  # Explode the Spring Boot application to a JAR structure suitable for optimal performances with AppCDS
-  ./explode-boot-jar.sh -d build/libs build/libs/${PROJECT_NAME}-${VERSION}.jar
+
+  # Unpack the Spring Boot executable JAR in a way suitable for optimal performances with AppCDS
+  ./unpack-executable-jar.sh -d build/unpacked build/libs/${PROJECT_NAME}-${VERSION}.jar
+
   # AppCDS training run
-  java $JAVA_OPTS -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/libs/run-app.jsa -jar build/libs/run-app.jar
+  java $JAVA_OPTS -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
 fi
+
 if [[ $1 != "-b" ]]; then
   # AppCDS optimized run
-  java $JAVA_OPTS -XX:SharedArchiveFile=build/libs/run-app.jsa -jar build/libs/run-app.jar
+  java $JAVA_OPTS -XX:SharedArchiveFile=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
 fi

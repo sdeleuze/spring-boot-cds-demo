@@ -29,22 +29,22 @@ You can either just run the `appcds.sh` script and perform those steps manually.
 
 Build the project.
 ```bash
-./gradlew clean build
+./gradlew build
 ```
 
-Explode the Spring Boot application to a JAR structure suitable for optimal performances with AppCDS:
+Unpack the Spring Boot application to a JAR structure suitable for optimal performances with AppCDS:
 ```bash
-./explode-boot-jar.sh -d build/libs build/libs/appcds-demo-0.0.1-SNAPSHOT.jar
+./unpack-executable-jar.sh -d build/unpacked build/libs/appcds-demo-0.0.1-SNAPSHOT.jar
 ```
 
 Perform the AppCDS training run (here with Spring AOT optimizations):
 ```bash
-java -Dspring.aot.enabled=true -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/libs/run-app.jsa -jar build/libs/run-app.jar
+java -Dspring.aot.enabled=true -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
 ```
 
 And finally run the application with AppCDS optimizations (here with Spring AOT optimizations):
 ```bash
-java -Dspring.aot.enabled=true -XX:SharedArchiveFile=build/libs/run-app.jsa -jar build/libs/run-app.jar
+java -Dspring.aot.enabled=true -XX:SharedArchiveFile=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
 ```
 
 Check the startup time, for example on my MacBook Pro M2:
@@ -54,14 +54,14 @@ Started AppcdsDemoApplication in 0.289 seconds (process running for 0.384)
 
 ## Build and run optimized container images AppCDS
 
-Check content of the `Dockerfile` and run the `create-appcds-container-image.sh` script, or run manually:
+Check content of the `Dockerfile` and run the `create-container-image.sh` script, or run manually:
 ```bash
-docker build -t sdeleuze/appcds-demo .
+docker build -t sdeleuze/spring-appcds-demo .
 ```
 
-Then run the `run-appcds-container.sh` script, or run manually:
+Then run the `run-container.sh` script, or run manually:
 ```bash
-docker run --rm -it -p 8080:8080 sdeleuze/appcds-demo
+docker run --rm -it -p 8080:8080 sdeleuze/spring-appcds-demo
 ```
 
 You can also try to deploy the resulting container image to your Cloud or Kubernetes platform.
