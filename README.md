@@ -1,6 +1,6 @@
 # Spring AppCDS demo
 
-This repository is intended to demonstrate how to use [Spring Framework 6.1 AppCDS support](https://docs.spring.io/spring-framework/reference/integration/class-data-sharing.html).
+This repository is intended to demonstrate how to use [Spring Framework AppCDS support](https://docs.spring.io/spring-framework/reference/integration/class-data-sharing.html).
 See also https://github.com/sdeleuze/spring-petclinic-data-jdbc/tree/appcds for related Spring Petclinic data points.
 
 ## Pre-requisites
