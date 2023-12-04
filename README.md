@@ -4,7 +4,7 @@ This repository is intended to demonstrate how to use [Spring Framework 6.1 CDS 
 
 See also:
  - https://github.com/sdeleuze/spring-petclinic-data-jdbc/tree/appcds for related Spring Petclinic data points
- - https://github.com/snicoll/appcds-log-parser which allows to produce a report about class loading
+ - https://github.com/snicoll/cds-log-parser which allows to produce a report about class loading
  - [spring-boot#38276](https://github.com/spring-projects/spring-boot/issues/38276) Improve exploded structure experience for efficient deployments
  - [spring-boot#34115](https://github.com/spring-projects/spring-boot/issues/34115) Investigate automatic CDS support
 
