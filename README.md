@@ -61,8 +61,8 @@ Perform the CDS training run (here with Spring AOT optimizations) in order to cr
 ```bash
 java -Dspring.aot.enabled=true \
 -Dspring.context.exit=onRefresh \
--XX:ArchiveClassesAtExit=build/unpacked/application.jsa\
- -jar build/unpacked/run-app.jar
+-XX:ArchiveClassesAtExit=build/unpacked/application.jsa \
+-jar build/unpacked/run-app.jar
 ```
 
 And finally run the application with CDS optimizations (here with Spring AOT optimizations):
