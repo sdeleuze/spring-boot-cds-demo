@@ -1,16 +1,16 @@
-# Spring AppCDS demo
+# Spring CDS demo
 
-This repository is intended to demonstrate how to use [Spring Framework 6.1 AppCDS support](https://docs.spring.io/spring-framework/reference/integration/class-data-sharing.html).
+This repository is intended to demonstrate how to use [Spring Framework 6.1 CDS support](https://docs.spring.io/spring-framework/reference/integration/class-data-sharing.html).
 
 See also:
  - https://github.com/sdeleuze/spring-petclinic-data-jdbc/tree/appcds for related Spring Petclinic data points
  - https://github.com/snicoll/appcds-log-parser which allows to produce a report about class loading
  - [spring-boot#38276](https://github.com/spring-projects/spring-boot/issues/38276) Improve exploded structure experience for efficient deployments
- - [spring-boot#34115](https://github.com/spring-projects/spring-boot/issues/34115) Investigate automatic AppCDS support
+ - [spring-boot#34115](https://github.com/spring-projects/spring-boot/issues/34115) Investigate automatic CDS support
 
 ## Pre-requisites
 
-While it is possible to use Java 17, it is recommended to use Java 21 which provide a more advanced AppCDS support.
+While it is possible to use Java 17, it is recommended to use Java 21 which provide a more advanced CDS support.
 You should also use a Java distribution with a prebuilt CDS archive.
 
 You can use [SDK manager](https://sdkman.io/) to install and use such Java distribution:
@@ -19,36 +19,36 @@ sdk env install
 sdk env
 ```
 
-Check the application starts correctly without AppCDS involved:
+Check the application starts correctly without CDS involved:
 ```bash
 ./gradlew bootRun
 ```
 
 Check the startup time, for example on my MacBook Pro M2:
 ```
-Started AppcdsDemoApplication in 0.575 seconds (process running for 0.696)
+Started CdsDemoApplication in 0.575 seconds (process running for 0.696)
 ```
 
-## Build and run with AppCDS
+## Build and run with CDS
  
-You can either just run the `appcds.sh` script and perform those steps manually.
+You can either just run the `cds.sh` script and perform those steps manually.
 
 Build the project.
 ```bash
 ./gradlew build
 ```
 
-Unpack the Spring Boot application to a JAR structure suitable for optimal performances with AppCDS:
+Unpack the Spring Boot application to a JAR structure suitable for optimal performances with CDS:
 ```bash
-./unpack-executable-jar.sh -d build/unpacked build/libs/appcds-demo-0.0.1-SNAPSHOT.jar
+./unpack-executable-jar.sh -d build/unpacked build/libs/cds-demo-0.0.1-SNAPSHOT.jar
 ```
 
-This shoukd create the following JAR structure:
+This should create the following JAR structure:
 ```
 build
 └── unpacked
         ├── application
-        │   └── spring-appcds-demo-1.0.0-SNAPSHOT.jar
+        │   └── spring-cds-demo-1.0.0-SNAPSHOT.jar
         ├── dependencies
         │   ├── ...
         │   ├── spring-context-6.1.0.jar
@@ -57,7 +57,7 @@ build
         └── run-app.jar"
 ```
 
-Perform the AppCDS training run (here with Spring AOT optimizations) in order to create an additional `build/unpacked/run-app.jsa` file:
+Perform the CDS training run (here with Spring AOT optimizations) in order to create an additional `build/unpacked/run-app.jsa` file:
 ```bash
 java -Dspring.aot.enabled=true \
 -Dspring.context.exit=onRefresh \
@@ -65,7 +65,7 @@ java -Dspring.aot.enabled=true \
  -jar build/unpacked/run-app.jar
 ```
 
-And finally run the application with AppCDS optimizations (here with Spring AOT optimizations):
+And finally run the application with CDS optimizations (here with Spring AOT optimizations):
 ```bash
 java -Dspring.aot.enabled=true \
 -XX:SharedArchiveFile=build/unpacked/run-app.jsa \
@@ -74,20 +74,20 @@ java -Dspring.aot.enabled=true \
 
 Check the startup time, for example on my MacBook Pro M2:
 ```
-Started AppcdsDemoApplication in 0.289 seconds (process running for 0.384)
+Started CdsDemoApplication in 0.289 seconds (process running for 0.384)
 ```
 
-## Build and run optimized container images AppCDS
+## Build and run optimized container images CDS
 
 Check content of the `Dockerfile` and run the `create-container-image.sh` script, or run manually:
 ```bash
-docker build -t sdeleuze/spring-appcds-demo .
+docker build -t sdeleuze/spring-cds-demo .
 ```
 
 Then run the `run-container.sh` script, or run manually:
 ```bash
-docker run --rm -it -p 8080:8080 sdeleuze/spring-appcds-demo
+docker run --rm -it -p 8080:8080 sdeleuze/spring-cds-demo
 ```
 
 You can also try to deploy the resulting container image to your Cloud or Kubernetes platform.
-Make sure that the server where you deploy the application has the same CPU architecture than the one where you built the AppCDS archive.
+Make sure that the server where you deploy the application has the same CPU architecture than the one where you built the CDS archive.

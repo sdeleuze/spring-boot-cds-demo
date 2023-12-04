@@ -5,7 +5,7 @@ while test $# -gt 0; do
   case "$1" in
     -h|--help)
       echo "unpack-executable-jar.sh - unpack Spring Boot executable JAR in order to run"
-      echo "the application efficiently and maximizing AppCDS effectiveness."
+      echo "the application efficiently and maximizing CDS effectiveness."
       echo " "
       echo "my-dir
             ├── application

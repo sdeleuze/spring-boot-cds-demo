@@ -5,7 +5,7 @@ set -e
 # Use -b to only perform the build steps
 # Use -s to only start the application
 
-PROJECT_NAME="spring-appcds-demo"
+PROJECT_NAME="spring-cds-demo"
 VERSION="1.0.0-SNAPSHOT"
 
 # Change JAVA_OPTS to "" to not use Spring AOT optimizations

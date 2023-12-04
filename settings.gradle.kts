@@ -1,1 +1,1 @@
-rootProject.name = "spring-appcds-demo"
+rootProject.name = "spring-cds-demo"
