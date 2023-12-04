@@ -20,10 +20,10 @@ if [[ $1 != "-s" ]]; then
   ./unpack-executable-jar.sh -d build/unpacked build/libs/${PROJECT_NAME}-${VERSION}.jar
 
   # AppCDS training run
-  java $JAVA_OPTS -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
+  java $JAVA_OPTS -Dspring.context.exit=onRefresh -XX:ArchiveClassesAtExit=build/unpacked/application.jsa -jar build/unpacked/run-app.jar
 fi
 
 if [[ $1 != "-b" ]]; then
   # AppCDS optimized run
-  java $JAVA_OPTS -XX:SharedArchiveFile=build/unpacked/run-app.jsa -jar build/unpacked/run-app.jar
+  java $JAVA_OPTS -XX:SharedArchiveFile=build/unpacked/application.jsa -jar build/unpacked/run-app.jar
 fi

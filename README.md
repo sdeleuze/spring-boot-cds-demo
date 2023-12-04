@@ -57,18 +57,18 @@ build
         └── run-app.jar"
 ```
 
-Perform the CDS training run (here with Spring AOT optimizations) in order to create an additional `build/unpacked/run-app.jsa` file:
+Perform the CDS training run (here with Spring AOT optimizations) in order to create an additional `build/unpacked/application.jsa` file:
 ```bash
 java -Dspring.aot.enabled=true \
 -Dspring.context.exit=onRefresh \
--XX:ArchiveClassesAtExit=build/unpacked/run-app.jsa\
+-XX:ArchiveClassesAtExit=build/unpacked/application.jsa\
  -jar build/unpacked/run-app.jar
 ```
 
 And finally run the application with CDS optimizations (here with Spring AOT optimizations):
 ```bash
 java -Dspring.aot.enabled=true \
--XX:SharedArchiveFile=build/unpacked/run-app.jsa \
+-XX:SharedArchiveFile=build/unpacked/application.jsa \
 -jar build/unpacked/run-app.jar
 ```
 
