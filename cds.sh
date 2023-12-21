@@ -24,6 +24,6 @@ if [[ $1 != "-s" ]]; then
 fi
 
 if [[ $1 != "-b" ]]; then
-  # AppCDS optimized run
+  # CDS optimized run
   java $JAVA_OPTS -XX:SharedArchiveFile=build/unpacked/application.jsa -jar build/unpacked/run-app.jar
 fi
