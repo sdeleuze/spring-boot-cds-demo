@@ -26,6 +26,7 @@ while test $# -gt 0; do
       echo "options:"
       echo "-d directory              Create the files in directory"
       echo "-a jar1.jar,jar2.jar      Comma separated list of additional jars to include"
+      echo "-q                        Make some output more quiet"
       echo "-h, --help                Show brief help"
       exit 0
       ;;
@@ -42,6 +43,10 @@ while test $# -gt 0; do
     -a)
       shift
       export ADDITIONAL=$(echo $1 | tr "," "\n")
+      ;;
+    -q)
+      shift
+      QUIET=true
       ;;
     *)
       export JAREXE=$1
@@ -91,3 +96,20 @@ fi
 
 jar cfm "${DESTINATION}/run-app.jar" "${MANIFEST_RUN_APP}"
 
+if [ -z "$QUIET" ]; then
+echo "Application successfully extracted to '${DESTINATION}'
+
+      To start the application from that directory:
+
+      $ java -jar run-app.jar
+
+      TIP: To improve startup performance, you can create a CDS Archive with a single training run:
+
+      $ java -XX:ArchiveClassesAtExit=application.jsa -Dspring.context.exit=onRefresh -jar run-app.jar
+
+      Then use the generated cache:
+
+      $ java -XX:SharedArchiveFile=application.jsa -jar run-app.jar
+
+      See https://docs.spring.io/spring-framework/reference/integration/class-data-sharing.html for more details."
+fi
