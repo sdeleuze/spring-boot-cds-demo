@@ -7,20 +7,25 @@ while test $# -gt 0; do
       echo "unpack-executable-jar.sh - unpack Spring Boot executable JAR in order to run"
       echo "the application efficiently and maximizing CDS effectiveness."
       echo " "
-      echo "my-dir
+      echo "my-unpack-dir
             ├── application
             │   └── my-app-1.0.0-SNAPSHOT.jar
             ├── dependencies
             │   ├── ...
             │   ├── spring-context-6.1.0.jar
             │   ├── spring-context-support-6.1.0.jar
-            │   ├── ...
+            │   └── ...
+            ├── ext
+            │   ├── jar1.jar
+            │   ├── jar2.jar
+            │   └── ...
             └── run-app.jar"
       echo " "
       echo "unpack-executable-jar.sh [options] application.jar"
       echo " "
       echo "options:"
       echo "-d directory              Create the files in directory"
+      echo "-a jar1.jar,jar2.jar      Comma separated list of additional jars to include"
       echo "-h, --help                Show brief help"
       exit 0
       ;;
@@ -33,6 +38,10 @@ while test $# -gt 0; do
         exit 1
       fi
       shift
+      ;;
+    -a)
+      shift
+      export ADDITIONAL=$(echo $1 | tr "," "\n")
       ;;
     *)
       export JAREXE=$1
@@ -70,6 +79,15 @@ do
   cp -r "${UNPACK_TMPDIR}/BOOT-INF/lib/${lib}" "${DESTINATION}/dependencies/"
   echo "  dependencies/$lib" >> "${MANIFEST_RUN_APP}"
 done
+
+if (( ${#ADDITIONAL[@]} )); then
+  mkdir -p "${DESTINATION}/ext"
+  for jar in $ADDITIONAL
+  do
+    cp "$jar" "${DESTINATION}/ext"
+    echo "  ext/$jar" >> "${MANIFEST_RUN_APP}"
+  done
+fi
 
 jar cfm "${DESTINATION}/run-app.jar" "${MANIFEST_RUN_APP}"
 
