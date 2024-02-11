@@ -12,6 +12,13 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
+tasks.bootBuildImage {
+	buildpacks.add("anthonydahanne/java:app-cds-feb-16")
+	environment.put("BP_JVM_VERSION","21")
+	environment.put("BP_JVM_TYPE","jdk")
+	environment.put("BP_APP_CDS_ENABLED","true")
+}
+
 repositories {
 	mavenCentral()
 }
