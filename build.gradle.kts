@@ -12,6 +12,10 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
+tasks.jar {
+	enabled = false
+}
+
 repositories {
 	mavenCentral()
 }
