@@ -71,13 +71,38 @@ unzip -q "$JAREXE" -d "$UNPACK_TMPDIR"
 mkdir -p "${DESTINATION}/application"
 mkdir -p "${DESTINATION}/dependencies"
 
-jar cf "${DESTINATION}/application/$(basename "$JAREXE")" -C "${UNPACK_TMPDIR}/BOOT-INF/classes/" .
-
+MANIFEST_APP="${UNPACK_TMPDIR}/MANIFEST-RUN-APP.MF"
 MANIFEST_RUN_APP="${UNPACK_TMPDIR}/MANIFEST-RUN-APP.MF"
+
 MAIN_CLASS=$(grep "Start-Class:" "${UNPACK_TMPDIR}/META-INF/MANIFEST.MF" | cut -d ' ' -f 2)
+IMPLEMENTATION_VERION=$(grep "Implementation-Version:" "${UNPACK_TMPDIR}/META-INF/MANIFEST.MF" | cut -d ' ' -f 2)
+IMPLEMENTATION_TITLE=$(grep "Implementation-Title:" "${UNPACK_TMPDIR}/META-INF/MANIFEST.MF" | cut -d ' ' -f 2)
+SPRING_BOOT_VERSION=$(grep "Spring-Boot-Version:" "${UNPACK_TMPDIR}/META-INF/MANIFEST.MF" | cut -d ' ' -f 2)
+BUILD_JDK_SPEC=$(grep "Build-Jdk-Spec:" "${UNPACK_TMPDIR}/META-INF/MANIFEST.MF" | cut -d ' ' -f 2)
+
+echo "Manifest-Version: 1.0" > "${MANIFEST_APP}"
+echo "Main-Class: ${MAIN_CLASS}" >> "${MANIFEST_APP}"
+echo "Implementation-Version: ${IMPLEMENTATION_VERION}" >> "${MANIFEST_APP}"
+echo "Implementation-Title: ${IMPLEMENTATION_TITLE}" >> "${MANIFEST_APP}"
+echo "Spring-Boot-Version: ${SPRING_BOOT_VERSION}" >> "${MANIFEST_APP}"
+echo "Build-Jdk-Spec: ${BUILD_JDK_SPEC}" >> "${MANIFEST_APP}"
+
+if [ -f "${UNPACK_TMPDIR}/META-INF/build-info.properties" ]; then
+  mv "${UNPACK_TMPDIR}/META-INF/build-info.properties" "${UNPACK_TMPDIR}/BOOT-INF/classes/META-INF/build-info.properties"
+fi
+
+if [ -f "${UNPACK_TMPDIR}/META-INF/spring.factories" ]; then
+  mv "${UNPACK_TMPDIR}/META-INF/spring.factories" "${UNPACK_TMPDIR}/BOOT-INF/classes/META-INF/spring.factories"
+fi
+
+jar cfm "${DESTINATION}/application/$(basename "$JAREXE")" "${MANIFEST_APP}" -C "${UNPACK_TMPDIR}/BOOT-INF/classes/" .
 
 echo "Manifest-Version: 1.0" > "${MANIFEST_RUN_APP}"
 echo "Main-Class: ${MAIN_CLASS}" >> "${MANIFEST_RUN_APP}"
+echo "Implementation-Version: ${IMPLEMENTATION_VERION}" >> "${MANIFEST_RUN_APP}"
+echo "Implementation-Title: ${IMPLEMENTATION_TITLE}" >> "${MANIFEST_RUN_APP}"
+echo "Spring-Boot-Version: ${SPRING_BOOT_VERSION}" >> "${MANIFEST_RUN_APP}"
+echo "Build-Jdk-Spec: ${BUILD_JDK_SPEC}" >> "${MANIFEST_RUN_APP}"
 echo "Class-Path: application/$(basename "$JAREXE")" >> "${MANIFEST_RUN_APP}"
 cut -d '/' -f 3 < "${UNPACK_TMPDIR}/BOOT-INF/classpath.idx" | cut -d '"' -f 1 | while IFS= read -r lib
 do
