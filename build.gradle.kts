@@ -1,7 +1,7 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.2.0"
-	id("org.springframework.boot.aot") version "3.2.0" // Optional but provide additional optimizations
+	id("org.springframework.boot") version "3.3.0-M3"
+	id("org.springframework.boot.aot") version "3.3.0-M3" // Optional but provide additional optimizations
 	id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -12,15 +12,10 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_21
 }
 
-tasks.bootBuildImage {
-	buildpacks.add("anthonydahanne/java:app-cds-feb-16")
-	environment.put("BP_JVM_VERSION","21")
-	environment.put("BP_JVM_TYPE","jdk")
-	environment.put("BP_APP_CDS_ENABLED","true")
-}
-
 repositories {
 	mavenCentral()
+	maven { url = uri("https://repo.spring.io/milestone") }
+//	maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 dependencies {
@@ -30,4 +25,11 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.bootBuildImage {
+	builder.set("paketobuildpacks/builder-jammy-buildpackless-base")
+	buildpacks.add("anthonydahanne/java:cds-march-27")
+	environment.put("BP_JVM_VERSION","21")
+	environment.put("BP_JVM_CDS_ENABLED","true")
 }

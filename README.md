@@ -83,21 +83,29 @@ You can use the Paketo Buildpacks to create a container image leveraging app cds
 
 Since it's an early release, it's not part of the official `paketobuildpacks/java` yet which is referenced by default by the boot plugin.
 
-Instead, you need for now to reference this Java composite buildpack: `anthonydahanne/java:app-cds`
+Instead, you need for now to reference this Java composite buildpack: `anthonydahanne/java:cds-march-27`
 
 Also, a few environment variables need to be set; all in all, check the `build.gradle.kts` file and pay attention to:
 
 ```kotlin
 tasks.bootBuildImage {
-	buildpacks.add("anthonydahanne/java:app-cds-feb-16")
+	buildpacks.add("anthonydahanne/java:cds-march-27")
 	environment.put("BP_JVM_VERSION","21")
-    environment.put("BP_JVM_TYPE","jdk")
     environment.put("BP_APP_CDS_ENABLED","true")
 }
 ```
 
 ```bash
  ./gradlew bootBuildImage
+```
+
+### Use the pack CLI instead
+
+IF you prefer to build the image using the `pack` CLI, you can use this command line:
+
+```shell
+pack build spring-cds-demo-cds   --env BP_JVM_VERSION=21 --env BP_JVM_CDS_ENABLED=true \ 
+ -b anthonydahanne/java:cds-march-27  -B paketobuildpacks/builder-jammy-tiny:latest
 ```
 
 Then run the `run-container.sh` script, or run manually:
