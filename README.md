@@ -85,18 +85,25 @@ Since it's an early release, it's not part of the official `paketobuildpacks/jav
 
 Instead, you need for now to reference this Java composite buildpack: `anthonydahanne/java:cds-march-27`
 
-Also, a few environment variables need to be set; all in all, check the `build.gradle.kts` file and pay attention to:
+Also, a few environment variables need to be set; all in all, check the `pom.xml` file and pay attention to:
 
-```kotlin
-tasks.bootBuildImage {
-	buildpacks.add("anthonydahanne/java:cds-march-27")
-	environment.put("BP_JVM_VERSION","21")
-    environment.put("BP_APP_CDS_ENABLED","true")
-}
+```xml
+<configuration>
+    <image>
+        <buildpacks>
+            <buildpack>anthonydahanne/java:cds-march-27</buildpack>
+        </buildpacks>
+        <builder>paketobuildpacks/builder-jammy-buildpackless-tiny</builder>
+        <env>
+            <BP_JVM_VERSION>21</BP_JVM_VERSION>
+            <BP_JVM_CDS_ENABLED>true</BP_JVM_CDS_ENABLED>
+        </env>
+    </image>
+</configuration>
 ```
 
 ```bash
- ./gradlew bootBuildImage
+./mvnw compile  spring-boot:process-aot  spring-boot:build-image
 ```
 
 ### Use the pack CLI instead
@@ -104,8 +111,8 @@ tasks.bootBuildImage {
 IF you prefer to build the image using the `pack` CLI, you can use this command line:
 
 ```shell
-pack build spring-cds-demo-cds   --env BP_JVM_VERSION=21 --env BP_JVM_CDS_ENABLED=true \ 
- -b anthonydahanne/java:cds-march-27  -B paketobuildpacks/builder-jammy-tiny:latest
+pack build spring-cds-demo-cds --env BP_MAVEN_BUILD_ARGUMENTS="compile spring-boot:process-aot package" --env BP_JVM_VERSION=21 \
+ --env BP_JVM_CDS_ENABLED=true  -b anthonydahanne/java:cds-march-27  -B paketobuildpacks/builder-jammy-tiny:latest
 ```
 
 Then run the `run-container.sh` script, or run manually:
