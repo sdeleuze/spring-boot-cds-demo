@@ -38,8 +38,15 @@
                     <image>
                         <buildpacks>
                             <buildpack>anthonydahanne/java:cds-march-27</buildpack>
+<!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/ca-certificates</buildpack>-->
+<!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/bellsoft-liberica</buildpack>-->
+<!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/syft</buildpack>-->
+<!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/executable-jar</buildpack>-->
+<!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/dist-zip</buildpack>-->
+<!--                            <buildpack>urn:cnb:builder:paketo-buildpacks/spring-boot</buildpack>-->
+<!--                            <buildpack>/Users/anthonyd2/workspaces/paketo-buildpacks/spring-boot</buildpack>-->
                         </buildpacks>
-                        <builder>paketobuildpacks/builder-jammy-buildpackless-tiny</builder>
+                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>
                         <env>
                             <BP_JVM_VERSION>21</BP_JVM_VERSION>
                             <BP_JVM_CDS_ENABLED>true</BP_JVM_CDS_ENABLED>
