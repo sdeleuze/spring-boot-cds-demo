@@ -2,8 +2,8 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
 	java
-	id("org.springframework.boot") version "3.3.1-SNAPSHOT"
-	id("org.springframework.boot.aot") version "3.3.1-SNAPSHOT" // Optional but provide additional optimizations
+	id("org.springframework.boot") version "3.3.1"
+	id("org.springframework.boot.aot") version "3.3.1" // Optional but provide additional optimizations
 	id("io.spring.dependency-management") version "1.1.5"
 }
 
@@ -16,7 +16,6 @@ java {
 
 repositories {
 	mavenCentral()
-	maven { url = uri("https://repo.spring.io/snapshot") }
 }
 
 dependencies {
