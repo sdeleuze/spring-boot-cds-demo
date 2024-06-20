@@ -13,6 +13,11 @@ Check the application starts correctly without CDS involved:
 ./gradlew bootRun
 ```
 
+Or with Maven
+```bash
+./mvnw spring-boot:run
+```
+
 Check the startup time, for example on my MacBook Pro M2:
 ```
 Started CdsDemoApplication in 0.575 seconds (process running for 0.696)
@@ -25,7 +30,7 @@ Build the container image with Gradle.
 ./gradlew bootBuildImage
 ```
 
-or with Maven
+Or with Maven
 ```bash
 ./mvnw spring-boot:build-image
 ```
