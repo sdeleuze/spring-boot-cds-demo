@@ -37,7 +37,7 @@ Or with Maven
 
 Then run it with Docker:
 ```bash
-docker run --rm -p 8080:8080 spring-cds-demo:1.0.0-SNAPSHOT
+docker run --rm -p 8080:8080 spring-boot-cds-demo:1.0.0-SNAPSHOT
 ```
 
 Check the startup time which should now be significantly lower:
