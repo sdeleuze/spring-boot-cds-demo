@@ -26,7 +26,8 @@ dependencies {
 
 tasks.named<BootBuildImage>("bootBuildImage") {
 	// Enable CDS and Spring AOT
-	environment.set(mapOf("BP_JVM_CDS_ENABLED" to "true", "BP_SPRING_AOT_ENABLED" to "true"))
+	environment.put("BP_JVM_CDS_ENABLED", "true")
+	environment.put("BP_SPRING_AOT_ENABLED", "true")
 
 	// For multi arch (Apple Silicon) support
 	builder.set("paketobuildpacks/builder-jammy-buildpackless-tiny")
