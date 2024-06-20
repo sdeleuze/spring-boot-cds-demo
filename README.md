@@ -1,6 +1,6 @@
 # Spring Boot CDS demo
 
-This repository is intended to demonstrate how to use [Spring Boot 3.3+ CDS support](https://docs.spring.io/spring-boot/3.3-SNAPSHOT/how-to/class-data-sharing.html). See also https://github.com/sdeleuze/petclinic-efficient-container.
+This repository is intended to demonstrate how to use [Spring Boot 3.3+ CDS support](https://docs.spring.io/spring-boot/how-to/class-data-sharing.html). See also https://github.com/sdeleuze/petclinic-efficient-container.
  
 ## Pre-requisites
 
